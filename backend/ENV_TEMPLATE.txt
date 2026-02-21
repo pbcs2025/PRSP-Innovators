@@ -1,0 +1,15 @@
+# Copy this file to .env and fill in the values
+# Or run: node setup-env.js to auto-generate
+
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/kyc_db
+REDIS_URL=redis://localhost:6379
+
+# 32-byte keys as 64-char hex — generate with: node generate-keys.js
+SERVER_INDEX_KEY=0000000000000000000000000000000000000000000000000000000000000000
+MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
+JWT_SECRET_KEY=your-jwt-secret-here
+
+# THE SHARED CLIENT KEY — same for ALL authorized users
+# Generate: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+SHARED_CLIENT_KEY=0000000000000000000000000000000000000000000000000000000000000000
