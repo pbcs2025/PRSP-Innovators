@@ -82,9 +82,9 @@ export default function AuditLogs() {
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">User</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Field</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Found</th>
+                  {/* <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Found</th> */}
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Anomaly</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">IP</th>
+                  {/* <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">IP</th> */}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -94,9 +94,9 @@ export default function AuditLogs() {
                     <td className="px-4 py-2 text-sm">{log.username}</td>
                     <td className="px-4 py-2 text-sm">{log.action}</td>
                     <td className="px-4 py-2 text-sm">{log.field_searched || '-'}</td>
-                    <td className="px-4 py-2 text-sm">{log.result_found ? '✓' : '✗'}</td>
+                    {/* <td className="px-4 py-2 text-sm">{log.result_found ? '✓' : '✗'}</td> */}
                     <td className="px-4 py-2 text-sm">{log.anomaly_flag ? '⚠️' : '-'}</td>
-                    <td className="px-4 py-2 text-sm">{log.ip_address}</td>
+                    {/* <td className="px-4 py-2 text-sm">{log.ip_address}</td> */}
                   </tr>
                 ))}
               </tbody>

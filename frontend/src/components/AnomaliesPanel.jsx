@@ -48,7 +48,7 @@ export default function AnomaliesPanel() {
                   <th className="px-4 py-2 text-left text-xs font-medium text-slate-600 uppercase">Time</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-slate-600 uppercase">User</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-slate-600 uppercase">Action</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-slate-600 uppercase">IP</th>
+                  {/* <th className="px-4 py-2 text-left text-xs font-medium text-slate-600 uppercase">IP</th> */}
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-slate-200">
@@ -57,7 +57,7 @@ export default function AnomaliesPanel() {
                     <td className="px-4 py-2 text-sm">{new Date(log.created_at).toLocaleString()}</td>
                     <td className="px-4 py-2 text-sm">{log.username}</td>
                     <td className="px-4 py-2 text-sm">{log.action}</td>
-                    <td className="px-4 py-2 text-sm">{log.ip_address}</td>
+                    {/* <td className="px-4 py-2 text-sm">{log.ip_address}</td> */}
                   </tr>
                 ))}
               </tbody>

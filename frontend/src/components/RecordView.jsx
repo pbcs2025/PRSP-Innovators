@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import api from '../api/client';
 import { decryptKYC } from '../crypto/aes';
 import useAuthStore from '../store/authStore';
+import KYCDataTable from './KYCDataTable';
 
 export default function RecordView({ record, onClose }) {
   const [decrypted, setDecrypted] = useState(null);
@@ -42,9 +42,7 @@ export default function RecordView({ record, onClose }) {
         {error && <p className="text-red-600">{error}</p>}
         
         {canDecrypt && decrypted ? (
-          <pre className="bg-gray-50 p-4 rounded border text-sm overflow-auto">
-            {JSON.stringify(decrypted, null, 2)}
-          </pre>
+          <KYCDataTable data={decrypted} />
         ) : (
           <p className="text-gray-600">
             {role === 'auditor' 

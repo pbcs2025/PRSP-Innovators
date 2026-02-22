@@ -3,6 +3,7 @@ import api from '../api/client';
 import { computeTrapdoor } from '../crypto/trapdoor';
 import { decryptKYC } from '../crypto/aes';
 import useAuthStore from '../store/authStore';
+import KYCDataTable from './KYCDataTable';
 
 export default function SearchKYC({ onRecordSelect }) {
   const [fieldType, setFieldType] = useState('pan');
@@ -119,10 +120,8 @@ export default function SearchKYC({ onRecordSelect }) {
           
           {canDecrypt && result.decrypted ? (
             <div>
-              <h4 className="font-semibold mb-2">Decrypted Data:</h4>
-              <pre className="bg-white p-4 rounded border text-sm overflow-auto">
-                {JSON.stringify(result.decrypted, null, 2)}
-              </pre>
+              <h4 className="font-semibold mb-2">Decrypted Data</h4>
+              <KYCDataTable data={result.decrypted} />
             </div>
           ) : (
             <div>
