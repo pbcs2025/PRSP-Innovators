@@ -129,6 +129,4 @@ kyc-sse-system/
 - MongoDB indexes are created automatically on startup
 - Redis is used for anomaly detection rate limiting
 
-## License
 
-MIT
