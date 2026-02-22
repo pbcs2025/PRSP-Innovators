@@ -31,8 +31,18 @@ A full-stack implementation of a KYC (Know Your Customer) system with Searchable
 ## Prerequisites
 
 - Node.js 18+
-- MongoDB running locally (or connection string)
-- Redis running locally (or connection string)
+- MongoDB (local or MongoDB Atlas)
+- Redis (optional, for anomaly detection)
+
+## Default Login Credentials
+
+After running the seed script, you can login with:
+
+| Role    | Username  | Password      |
+|---------|-----------|---------------|
+| Admin   | admin     | admin123      |
+| Officer | officer1  | officer1123   |
+| Auditor | auditor1  | auditor1123   |
 
 ## Quick Start
 
@@ -99,47 +109,25 @@ npm run dev
 # App runs on http://localhost:5173
 ```
 
-### 4. Create First Admin User
+### 4. Create Default Users
 
-You'll need to create the first admin user. You can temporarily modify `backend/src/routes/auth.js` to allow unauthenticated registration, or use MongoDB directly:
-
-```javascript
-// In MongoDB shell or using a script
-const bcrypt = require('bcryptjs');
-const password_hash = await bcrypt.hash('Admin@123', 12);
-// Then insert into users collection with role: 'admin'
-```
-
-Or use a simple Node script:
+Create default users for all roles:
 
 ```bash
 cd backend
-node -e "
-const bcrypt = require('bcryptjs');
-const mongoose = require('mongoose');
-require('dotenv').config();
+node seed-users.js
+```
 
-(async () => {
-  await mongoose.connect(process.env.MONGO_URI);
-  const User = mongoose.model('User', new mongoose.Schema({
-    username: String,
-    email: String,
-    password_hash: String,
-    role: String,
-    is_active: Boolean
-  }));
-  const hash = await bcrypt.hash('Admin@123', 12);
-  await User.create({
-    username: 'admin',
-    email: 'admin@bank.com',
-    password_hash: hash,
-    role: 'admin',
-    is_active: true
-  });
-  console.log('Admin user created!');
-  process.exit(0);
-})();
-"
+This will create three users:
+- **Admin**: username=`admin`, password=`admin123`
+- **Officer**: username=`officer1`, password=`officer1123`
+- **Auditor**: username=`auditor1`, password=`auditor1123`
+
+Alternatively, you can create users individually using:
+
+```bash
+cd backend
+node create-admin.js
 ```
 
 ## Architecture
