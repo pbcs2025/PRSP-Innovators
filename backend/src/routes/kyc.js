@@ -45,8 +45,24 @@ router.post('/search', verifyJWT, rolesRequired('admin', 'officer', 'auditor'), 
     }
     const role = req.user.role;
 
+    // Rate limit check FIRST – block before running search
     const is_anomaly = await checkAndRecordSearch(req.user.sub);
-    const record     = await searchByTrapdoor(field_type, trapdoor);
+    if (is_anomaly) {
+      await insertLog({
+        user_id: req.user.sub, username: req.user.username,
+        action: 'search_blocked', field_searched: field_type,
+        kyc_record_id: null,
+        ip_address: req.ip || req.headers['x-forwarded-for'] || 'unknown',
+        user_agent: req.headers['user-agent'] || 'unknown',
+        result_found: false,
+        anomaly_flag: true
+      });
+      return res.status(429).json({
+        error: 'Too many searches. You have been temporarily blocked (max 10 per minute). This has been reported to administrators.'
+      });
+    }
+
+    const record = await searchByTrapdoor(field_type, trapdoor);
 
     await insertLog({
       user_id: req.user.sub, username: req.user.username,
@@ -55,7 +71,7 @@ router.post('/search', verifyJWT, rolesRequired('admin', 'officer', 'auditor'), 
       ip_address: req.ip || req.headers['x-forwarded-for'] || 'unknown',
       user_agent: req.headers['user-agent'] || 'unknown',
       result_found: !!record,
-      anomaly_flag: is_anomaly
+      anomaly_flag: false
     });
 
     if (!record) return res.json({ found: false });

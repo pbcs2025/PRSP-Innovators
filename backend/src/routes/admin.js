@@ -1,5 +1,5 @@
 const express = require('express');
-const { listUsers, deactivateUser } = require('../models/user');
+const { listUsers, deactivateUser, activateUser } = require('../models/user');
 const { queryLogs } = require('../models/accessLog');
 const verifyJWT     = require('../middleware/verifyJWT');
 const rolesRequired = require('../middleware/rbac');
@@ -24,6 +24,16 @@ router.post('/users/:id/deactivate', verifyJWT, rolesRequired('admin'), async (r
     res.json({ message: 'User deactivated' });
   } catch (error) {
     console.error('Deactivate user error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.post('/users/:id/activate', verifyJWT, rolesRequired('admin'), async (req, res) => {
+  try {
+    await activateUser(req.params.id);
+    res.json({ message: 'User activated' });
+  } catch (error) {
+    console.error('Activate user error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

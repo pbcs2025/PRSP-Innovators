@@ -53,6 +53,7 @@ export default function AuditLogs() {
           >
             <option value="">All Actions</option>
             <option value="search">Search</option>
+            <option value="search_blocked">Search Blocked (Anomaly)</option>
             <option value="add_kyc">Add KYC</option>
             <option value="decrypt">Decrypt</option>
             <option value="login">Login</option>

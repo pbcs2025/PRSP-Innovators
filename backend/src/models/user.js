@@ -39,4 +39,8 @@ async function deactivateUser(userId) {
   await User.findByIdAndUpdate(userId, { is_active: false });
 }
 
-module.exports = { createUser, findUserByUsername, findUserById, verifyPassword, listUsers, deactivateUser };
+async function activateUser(userId) {
+  await User.findByIdAndUpdate(userId, { is_active: true });
+}
+
+module.exports = { createUser, findUserByUsername, findUserById, verifyPassword, listUsers, deactivateUser, activateUser };

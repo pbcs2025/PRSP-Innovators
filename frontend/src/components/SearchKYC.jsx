@@ -55,7 +55,11 @@ export default function SearchKYC({ onRecordSelect }) {
         decrypted: decryptedData
       });
     } catch (err) {
-      setError(err.response?.data?.error || 'Search failed');
+      if (err.response?.status === 429) {
+        setError(err.response?.data?.error || 'Too many searches. You have been temporarily blocked.');
+      } else {
+        setError(err.response?.data?.error || 'Search failed');
+      }
     } finally {
       setLoading(false);
     }
@@ -90,7 +94,15 @@ export default function SearchKYC({ onRecordSelect }) {
             />
           </div>
         </div>
-        {error && <div className="text-red-600 text-sm">{error}</div>}
+        {error && (
+          <div className={`text-sm p-3 rounded-md ${
+            error.includes('blocked') || error.includes('429')
+              ? 'bg-red-100 border border-red-200 text-red-800'
+              : 'text-red-600'
+          }`}>
+            {error}
+          </div>
+        )}
         <button
           type="submit"
           disabled={loading}

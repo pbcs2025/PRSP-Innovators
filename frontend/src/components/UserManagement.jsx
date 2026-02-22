@@ -50,6 +50,16 @@ export default function UserManagement() {
     }
   };
 
+  const handleActivate = async (userId) => {
+    if (!confirm('Activate this user?')) return;
+    try {
+      await api.post(`/admin/users/${userId}/activate`);
+      fetchUsers();
+    } catch (err) {
+      alert(err.response?.data?.error || 'Failed to activate user');
+    }
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-6">
@@ -129,12 +139,19 @@ export default function UserManagement() {
                 <td className="px-4 py-2 text-sm">{user.role}</td>
                 <td className="px-4 py-2 text-sm">{user.is_active ? 'Active' : 'Inactive'}</td>
                 <td className="px-4 py-2 text-sm">
-                  {user.is_active && (
+                  {user.is_active ? (
                     <button
                       onClick={() => handleDeactivate(user.id)}
-                      className="text-red-600 hover:text-red-800"
+                      className="text-red-600 hover:text-red-800 font-medium"
                     >
                       Deactivate
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleActivate(user.id)}
+                      className="text-green-600 hover:text-green-800 font-medium"
+                    >
+                      Activate
                     </button>
                   )}
                 </td>
