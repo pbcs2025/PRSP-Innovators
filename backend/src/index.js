@@ -44,7 +44,10 @@ const adminRoutes = require('./routes/admin');
 const logsRoutes  = require('./routes/logs');
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ 
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5176', 'http://127.0.0.1:5176'],
+  credentials: true 
+}));
 app.use(express.json());
 
 app.use('/auth',  authRoutes);
@@ -58,7 +61,10 @@ const PORT = process.env.PORT || 5000;
   try {
     await connectDB();
     await initIndexes();
-    app.listen(PORT, () => console.log(`✅ Backend running on http://localhost:${PORT}`));
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`✅ Backend running on http://localhost:${PORT}`);
+      console.log(`   Listening on all interfaces (0.0.0.0:${PORT})`);
+    });
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     process.exit(1);
